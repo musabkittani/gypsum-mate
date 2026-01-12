@@ -12,7 +12,7 @@ interface PDFData {
         client: string;
         date: string;
     };
-    t: (key: string) => string;
+    t: (key: any) => string;
 }
 
 // Force English numerals logic
@@ -20,7 +20,7 @@ const formatNumber = (num: number) => {
     return num.toLocaleString('en-GB');
 };
 
-export const generatePDF = async (
+export const generatePDF = (
     logoBase64: string | null,
     title: string,
     data: PDFData
@@ -67,8 +67,8 @@ export const generatePDF = async (
         yOffset += 6;
     }
 
-    // Date (English Numerals enforced)
-    pdf.text(`${t('Date') || 'Date'}: ${metadata.date}`, centerX, yOffset, { align: 'center' });
+    // Date (English Numerals enforced, always "Date" label in English)
+    pdf.text(`Date: ${metadata.date}`, centerX, yOffset, { align: 'center' });
     yOffset += 10;
 
     // 4. Tables with autoTable
